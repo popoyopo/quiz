@@ -34,12 +34,22 @@ exports.answer = function(req,res){
 
 // GET /quizes/author
 exports.author = function(req,res){
-	res.render('quizes/author',{autor:'Francisco Canales'});
+	res.render('author',{autor:'Francisco Canales'});
 };
 
 // GET /quizes
 exports.index = function(req,res){
-	models.Quiz.findAll().then(
+	var busqueda = req.query.search;
+	if(!busqueda){
+		busqueda='%';
+	} else {
+		busqueda='%'+busqueda+'%';
+		busqueda=busqueda.replace(' ','%');
+	}	
+
+	//	models.Quiz.findAll().then(
+	models.Quiz.findAll({where: ["pregunta like ?", busqueda],
+							order: [["pregunta","ASC"]]}).then(
 		function(quizes){
 			res.render('quizes/index',{quizes: quizes});
 	}).catch(function(error){next(error);});
