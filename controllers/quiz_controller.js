@@ -100,5 +100,5 @@ exports.update = function(req,res){
 
 // GET /quizes/author
 exports.author = function(req,res){
-	res.render('author',{autor:'Francisco Canales'});
+	res.render('author',{autor:'Francisco Canales', errors:[]});
 };
