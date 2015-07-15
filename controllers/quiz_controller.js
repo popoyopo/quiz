@@ -82,7 +82,6 @@ exports.create = function(req,res){
 
 // PUT /quizes/:id
 exports.update = function(req,res){ 
-	console.log('*****************************');
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
 
@@ -96,6 +95,16 @@ exports.update = function(req,res){
 				.then( function(){res.redirect('/quizes')});
 			}	//redirección HTTP (URL relativo) lista de preguntas
 		});
+};
+
+// DELETE /quizes/:id
+exports.destroy = function(req,res){ 
+	console.log('*****************************');
+	req.quiz.destroy().then(function(){
+		res.redirect('/quizes');
+	}).catch(function(error){
+		next(error)
+	});
 };
 
 // GET /quizes/author
