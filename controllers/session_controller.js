@@ -15,7 +15,7 @@ exports.create = function(req,res){
 	var userController = require('./user_controller');
 	userController.autenticar(login,password,function(error,user){
 		if(error){	//si hay error retornamos mensajes de error de sesión
-			req.session.errors = [{"message":'Se ha producido un error : '+error}]
+			req.session.errors = [{"message":'Se ha producido un error : '+error}];
 			res.redirect("/login");
 		}
 		console.log('*****************************1');
