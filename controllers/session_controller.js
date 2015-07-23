@@ -8,7 +8,6 @@ exports.new = function(req,res){
 
 //post/login
 exports.create = function(req,res){ 
-	console.log('*****************************');
 	var login = 	req.body.login;
 	var password =  req.body.password;
 
@@ -17,8 +16,8 @@ exports.create = function(req,res){
 		if(error){	//si hay error retornamos mensajes de error de sesión
 			req.session.errors = [{"message":'Se ha producido un error : '+error}];
 			res.redirect("/login");
+			return;
 		}
-		console.log('*****************************1');
 		//Crear la req.session.user y guardar campos id y username
 		// La sesión se define por la existencia de : req.session.user
 		req.session.user = {id: user.id, username: user.username};
