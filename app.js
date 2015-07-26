@@ -38,6 +38,24 @@ app.use(function(req, res, next){
     next();
 });
 
+//auto logout
+app.use(function(req, res, next){
+    var ahora = (new Date()).getTime();
+    if(req.session.user){ // Hay una sesion activa
+        if(!req.session.tiempo){ // No existe es la primera vez
+            req.session.tiempo = ahora;
+        }else{
+            if(ahora - req.session.tiempo > 120000){ // Han pasado mas de 2 minutos
+                delete res.locals.session.user;
+            }else{
+                req.session.tiempo = ahora;
+            }
+        }
+    }
+            
+    next();
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
